@@ -1,37 +1,19 @@
 let fps = 25  // frames per sec. max 60
+let videoBL   = document.getElementById('video_BlueLine');
 let video     = document.getElementById('video_array');
 let video_alf = document.getElementById('video_alpha');
 let vid_src = [
-  "Video/VC00-WEB.mp4",      //  White BG
-  "Video/VC01-WEB.mp4",      //  Window Lisa
-  "Video/VC02-WEB.mp4",      //  Window Monument
-  "Video/VC03-WEB.mp4",      //  Window Capitol
-  "Video/VC04-WEB.mp4",      //  Window Rus Revol + Audio
-  "Video/VC05-WEB.mp4",      //  Window Beethovwen Monument + Audio
-  "Video/VC06-WEB.mp4",      //  Window GDR + Audio
-  "Video/VC07-WEB.mp4",      //  Window Pic-animation Beethoven go out + Audio
-  "Video/VC08-WEB.mp4",      //  Window Blue text
-  "Video/VC09-WEB.mp4",      //  Amsterdam Beethoven Duldet mutig Window Freude
-  "Video/VC10-WEB.mp4",      //  Window Monument (copy VC02)
-  "Video/VC11-WEB.mov",      //  .MOV Baloon Ewig dein schwarz +Alpha
-  "Video/VC12-WEB.mov",      //  Baloon Ewig dein rot +Alpha
-  "Video/VC13-WEB.mov",      //  Baloon Ewig dein braun +Alpha
-  "Video/VC14-WEB.mov",      //  Baloon Ewig dein grün +Alpha
-  "Video/VC15-WEB.mov",      //  Baloon Ewig mein schwarz +Alpha
-  "Video/VC16-WEB.mov",      //  Baloon Ewig mein rot +Alpha
-  "Video/VC17-WEB.mov",      //  Baloon Ewig mein braun +Alpha
-  "Video/VC18-WEB.mov",      //  Baloon Ewig mein grün +Alpha
-  "Video/VC19-WEB.mov",      //  Baloon Ewig uns schwarz +Alpha
-  "Video/VC20-WEB.mov",      //  Baloon Ewig uns rot +Alpha
-  "Video/VC21-WEB.mov",      //  Baloon Ewig uns braun +Alpha
-  "Video/VC22-WEB.mov",      //  Baloon Ewig uns grün +Alpha
-  "Video/VC23-WEB.mp4",      //  Blue Crosses
-  "Video/VC24-WEB.mp4",      //  Beethoven Bee blow up Freude Ahndest du den Schöpfer
-  "Video/VC25-WEB.mp4",      //  Pic animation Beethoven go in Window Freude
-  "Video/VC26-WEB.mp4"       //  Polizei Window Freude Logo
-];
-
-let vidA_src = [
+  "Video/VC00-WEB.mp4",       //  White BG
+  "Video/VC01-WEB.webm",      //  Window Lisa
+  "Video/VC02-WEB.webm",      //  Window Monument
+  "Video/VC03-WEB.webm",      //  Window Capitol
+  "Video/VC04-WEB.webm",      //  Window Rus Revol + Audio
+  "Video/VC05-WEB.webm",      //  Window Beethovwen Monument + Audio
+  "Video/VC06-WEB.webm",      //  Window GDR + Audio
+  "Video/VC07-WEB.webm",      //  Window Pic-animation Beethoven go out + Audio
+  "Video/VC08-WEB.webm",      //  Window Blue text
+  "Video/VC09-WEB.webm",      //  Amsterdam Beethoven Duldet mutig Window Freude
+  "Video/VC10-WEB.webm",      //  Window Monument (copy VC02)
   "Video/VC11-WEB.WebM",      //  [0] Baloon Ewig dein schwarz +Alpha
   "Video/VC12-WEB.WebM",      //  [1] Baloon Ewig dein rot +Alpha
   "Video/VC13-WEB.WebM",      //  [2] Baloon Ewig dein braun +Alpha
@@ -44,6 +26,10 @@ let vidA_src = [
   "Video/VC20-WEB.WebM",      //  [9] Baloon Ewig uns rot +Alpha
   "Video/VC21-WEB.WebM",      //  [10] Baloon Ewig uns braun +Alpha
   "Video/VC22-WEB.WebM",      //  [11] Baloon Ewig uns grün +Alpha
+  "Video/VC23-WEB.mp4",       //  Blue Line Crosses
+  "Video/VC24-WEB.webm",      //  Beethoven Bee blow up Freude Ahndest du den Schöpfer
+  "Video/VC25-WEB.webm",      //  Pic animation Beethoven go in Window Freude
+  "Video/VC26-WEB.webm"       //  Polizei Window Freude Logo
 ];
 
 let K01 = true;
@@ -64,7 +50,8 @@ var noteQueue = [];
 var hdProcessQueue; // setInterval Handler
 let videoPlays = false;
 
-audioKadenz.src = "assets/AD00.mp3";
+// videoBL.src = vid_src[23];
+audioKadenz.src = ad_src[0];
 ad.muted=false;
 
 
@@ -153,6 +140,7 @@ function noteOn(note) {
                     }; break;
   case 106:  // alles ausschalten und in die Ausgangsposition bringen, ist immer eingeschaltet.
               video.src = vid_src[0]; video.play(); videoPlays=true;
+              videoBL.pause();
               audioKadenz.pause(); ad.pause();
               K01=true; K02=K03=K04=K05=K06=K07=K08=K09=K10=K11=K12=K13=K14=K15=K16=K17=K18=K19=K20=false;
               noteQueue.length = 0; 
@@ -161,6 +149,7 @@ function noteOn(note) {
     break;
   
   case 108:   // Panictaste - alles ausschalten. Prepare to new play.
+              videoBL.pause();
               video.src = vid_src[0]; video.play(); videoPlays=true;
               audioKadenz.pause(); ad.pause();
               K01=K02=K03=K04=K05=K06=K07=K08=K09=K10=K11=K12=K13=K14=K15=K16=K17=K18=K19=K20=false;
@@ -174,11 +163,11 @@ function noteOn(note) {
 //   
 //
 //
-case 92: if(K16) {K16=false; video_alf.src = vidA_src[4+eMein()]; video_alf.play();
+case 92: if(K16) {K16=false; video_alf.src = vid_src[15+eMein()]; video_alf.play();
               setTimeout(()=>K16=true,4000); } return;
-case 84: if(K17) {K17=false; video_alf.src = vidA_src[0+eDein()]; video_alf.play();
+case 85: if(K17) {K17=false; video_alf.src = vid_src[11+eDein()]; video_alf.play();
               setTimeout(()=>K17=true,4000);} return;
-case 78: if(K18) {K18=false; video_alf.src = vidA_src[8+eUns()]; video_alf.play(); 
+case 78: if(K18) {K18=false; video_alf.src = vid_src[19+eUns()]; video_alf.play(); 
               setTimeout(()=>K18=true,4000);} return;
 
   }   // switch
@@ -196,7 +185,10 @@ function processingQueue() {
   console.log('note =', note, 'Queue=', noteQueue.length);
   
   switch(note) {   //  queue actions
-    case 21: {K02=K16=K17=K18=true; video.src = vid_src[23]; video.play();
+    case 21: {K02=K16=K17=K18=true; videoBL.src = vid_src[23]; videoBL.play();
+              video.src = vid_src[11]; let videoPromise=video.play(); //  To load transparent frame on z=0 level
+              if (videoPromise !== undefined) {
+                  videoPromise.then(() =>  video.pause());  }
               audioKadenz.load(); audioKadenz.play(); audioKadenz.muted=false; } break;
     case 49: if(K02) {K02=false; K03 = true; video.src = vid_src[1]; video.play(); videoPlays=true;} break;
     case 56: if(K03) {K03=false; video.src = vid_src[2]; video.play(); videoPlays=true; setTimeout( ()=>{
@@ -222,22 +214,25 @@ function processingQueue() {
               setTimeout( ()=>{ 
                 if(Math.floor(Math.random() * 2)==0) {K12 = true; ad.src=ad_src[4]; ad.play();} // ende if - 1
                 else {K13 = true; ad.src=ad_src[3]; ad.play(); } // ende if - 0
-              },10000); // setTimeout
+              },5000); // setTimeout
             } break; // 51
     case 58: if(K06) {K06=false; K07 = !K07; video.src = vid_src[7]; video.play(); videoPlays=true;} break;
-    case 60: if(K07) {K07=false; K08 = true; video.src = vid_src[24]; video.play();videoPlays=true;} break;
+    case 61: if(K07) {K07=false; K08 = true; video.src = vid_src[24]; video.play();videoPlays=true;} break;
     case 70: if(K08) {K08=false; K09 = true; video.src = vid_src[9]; video.play(); videoPlays=true;} break;
     case 71: if(K09) {K10=true;  K09=false;  video.src = vid_src[25]; video.play(); videoPlays=true;} break;
-    case 105:if(K10) {K10=false; K01=true; 
-                video.src = vid_src[26]; video.play(); videoPlays=true;
-                // audioKadenz.pause(); ad.pause();             
+    case 105:if(K10) {K10=false; video.src = vid_src[26]; video.play(); videoPlays=true;
+              setTimeout( ()=>{ 
+              if(Math.floor(Math.random() * 2)==0) {K12 = true; ad.src=ad_src[4]; ad.play();} // ende if - 1
+              else {K13 = true; ad.src=ad_src[3]; ad.play(); } // ende if - 0
+      },5000); // setTimeout
+                    
               } break; // 105
 
 
     // following block to move from Queue processing into Canvas
     // case 92: if(K16) {K16=false; video.src = vid_src[15+eMein()]; video.play(); videoPlays=true;
     //                   setTimeout(()=>K16=true,4000); } break;
-    // case 84: if(K17) {K17=false; video.src = vid_src[11+eDein()]; video.play();videoPlays=true;
+    // case 85: if(K17) {K17=false; video.src = vid_src[11+eDein()]; video.play();videoPlays=true;
     //                  setTimeout(()=>K17=true,4000);} break;
     // case 78: if(K18) {K18=false; video.src = vid_src[19+eUns()]; video.play(); videoPlays=true;
     //                   setTimeout(()=>K18=true,4000);} break;
