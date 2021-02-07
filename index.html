@@ -14,10 +14,12 @@
     type="button"
     value="Start spielen"
     onclick="this.parentNode.removeChild(this);">
-
-  <video id="video_array"  muted autoplay preload="auto" class="canvas-img" width="800" height="450">
-      
-  </video>
+  <div id="container">
+      <video id="video_array" autoplay preload="auto" class="canvas-img">
+      </video>
+      <video id="video_alpha" autoplay preload="auto" class="canvas-img">
+      </video>
+  </div>
 
   <audio id="kadenz" muted=true autoplay>    </audio>
   <audio id="AD"     muted=true autoplay>    </audio>
